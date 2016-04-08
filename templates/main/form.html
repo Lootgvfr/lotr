@@ -1,0 +1,50 @@
+﻿{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Submission Form {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="left">
+    <p>Submit your message in form below!</p>
+    <form action="{% url 'form' %}" method="post">
+        {% csrf_token %}
+        <input type="text" class="name_input" name="Name" value="{{ name }}" placeholder="Name">
+        <input type="text" class="email_input" name="Email" value="{{ email }}" placeholder="E-mail">
+        <textarea class="message_input" name="Message" placeholder="Your message">{{ message }}</textarea>
+        <input type="submit" class="submit" value="Submit" />
+    </form>
+    {% if error_message != 'Name' %}
+    <p><b>{{ error_message }}</b></p>
+    {% endif %}
+</div>
+{% if ans == 'yes' %}
+<div class="right">
+    <p>Your messages:</p>
+    {% for answ in answers %}
+    <table class="message">
+        <tr>
+            <td class="capt">
+                Message
+            </td>
+            <td class="txt">
+                {{ answ.message }}
+            </td>
+        </tr>
+        <tr>
+            <td class="capt">
+                Answer
+            </td>
+            <td class="txt">
+                {{ answ.answer }}
+            </td>
+        </tr>
+    </table>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+
+           

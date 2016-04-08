@@ -1,0 +1,24 @@
+﻿{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Register Form {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<p>Enter your registration data</p>
+<form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+    <input type="text" class="name_input" name="Username" value="{{ username }}" placeholder="Username">
+    <input type="text" class="email_input" name="Email" value="{{ email }}" placeholder="E-mail">
+    <input type="password" class="password_input" name="Password" placeholder="Password" value="">
+    <input type="password" class="password_input" name="Password_repeat" placeholder="Repeat password" value="">
+    <input type="submit" class="submit" value="Submit" />
+</form>
+{% if error_message != 'Name' %}
+<p><b>{{ error_message }}</b></p>
+{% endif %}
+{% endblock %}
+
+           

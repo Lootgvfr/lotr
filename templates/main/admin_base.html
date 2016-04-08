@@ -1,0 +1,44 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Administration</title>
+    <script>
+        {% block script %}
+        {% endblock %}
+    </script>
+	<link rel="stylesheet" type="text/css" href="{% static 'main/css/admin_base.css' %}">
+    {% block style %}
+    {% endblock %}
+    <style> 
+    </style>
+</head>
+<body>
+    <div class='header'>
+        <div class='header-title'>
+            Administration panel
+        </div>
+        <ul class='header-nav'>
+            {% if group == 'Admin' or group == 'Author' %}
+            <li>
+                <a href="{% url 'admin_pages' %}">Pages</a>
+            </li>
+            {% endif %}
+            {% if group == 'Admin' or group == 'Moderator' %}
+            <li>
+                <a href="{% url 'admin_messages_index' %}">Messages</a>
+            </li>
+            <li>
+                <a href="{% url 'admin_questions' %}">Questions</a>
+            </li>        
+            {% endif %} 
+            <li>
+                <a href="{% url 'index' %}">Back to site</a>
+            </li>
+        </ul>
+    </div>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

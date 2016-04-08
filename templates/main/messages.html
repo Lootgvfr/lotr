@@ -1,0 +1,39 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Submitted messages</title>
+    <style>
+        <link rel="stylesheet" type="text/css" href="{% static 'main/css/messages.css' %}">
+    </style>
+</head>
+<body>
+    <div class='header'>
+        <div class='header-title'>
+            Submitted messages
+        </div>
+    </div>
+    <div class='message-container'>
+        {% for msg in message_list %}
+        <div class='message'>
+            <div class='right'>
+                <div class='datetime'>{{ msg.add_date }}</div>
+                <div class='ip'>{{ msg.ip_address }}</div>
+                <div class='id'>{{ msg.id }}</div>
+            </div>
+            <div class='left'>
+                <div class='name'><b>Name</b>: {{ msg.name }}</div>
+                <div class='email'><b>Email</b>: {{ msg.email }}</div>
+                <div class='text'><b>Message text:</b> {{ msg.text }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <ul class='pages'>
+        {% for i in pages %}
+        <li {% if i == selected_page %} class='selected' {% endif %} ><a href="{% url 'messages' i %}">{{ i }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

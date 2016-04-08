@@ -1,0 +1,22 @@
+﻿{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Login Form {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<p>Enter your data to login</p>
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <input type="text" class="name_input" name="Username" value="{{ username }}" placeholder="Username">
+    <input type="password" class="password_input" name="Password" placeholder="Password" value="">
+    <input type="submit" class="submit" value="Login" />
+</form>
+{% if error_message != '' %}
+<p><b>{{ error_message }}</b></p>
+{% endif %}
+{% endblock %}
+
+           

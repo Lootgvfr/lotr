@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Access denied {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/no_access.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="text-title">Access denied</div>
+<p>Your permissions don't allow you to watch this page.</p>
+<img class="no" src="{% static 'main/no_access.jpg' %}">
+{% endblock %}

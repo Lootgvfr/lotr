@@ -1,0 +1,29 @@
+﻿{% extends "main/admin_base.html" %}
+{% load staticfiles %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/admin_questions.css' %}">
+{% endblock %}
+
+{% block content %}
+{% for question in questions %}
+<div class="question">
+    <div class="question-name">
+        {{ question.name }}
+    </div>
+    <div class="question-results">
+        Results:<br>
+        {% for answer in question.answers %}
+        {{ answer.text }} - {{ answer.votes_count }} votes<br>
+        {% endfor %}
+    </div>
+    <div class="question-delete">
+        <a href="{% url 'del_question' question.id %}">Delete question</a>
+    </div>
+</div>
+{% endfor %}
+<div class="add-button"><a href="{% url 'add_question' %}">Add question</a></div>
+{% if error_message and error_message != '' %}
+<div class="error">{{ error_message }}</div>
+{% endif %}
+{% endblock %}

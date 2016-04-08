@@ -1,0 +1,276 @@
+.header{
+    margin-top:-22px;
+}
+
+.page-container {
+    display: block;
+    margin-left: 10px;
+    margin-top: 10px;
+    width:1050px;
+    border-top: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    font-family: Verdana;
+    font-size:14px;
+}
+
+.page{
+    display:block;
+    position: relative;
+    border-bottom: 1px solid #aaa;
+    padding: 0px;
+    min-height: 37px;
+    margin:0px;
+}
+
+.page li{
+    float:left;
+    overflow:hidden;
+    padding: 10px 5px 10px 5px;
+    
+}
+
+.page-title{
+    display:block;
+    border-right: 1px solid #aaa;
+    min-width:380px;
+    padding-left: 10px;
+}
+
+.page-title a{
+    text-decoration:none;
+    color:#417690;
+}
+
+.page-order{
+    display: block;
+    width: 75px;
+    text-align:center;
+    border-right: 1px solid #aaa;
+}
+
+.page-access{
+    width: 80px;
+    display: block;
+    text-align: center;
+    border-right: 1px solid #aaa;
+}
+
+.page-status{
+    width:100px;
+    display: block;
+    text-align: center;
+    border-right: 1px solid #aaa;
+}
+
+.page-status a{
+    text-decoration:none;
+    color:#417690;
+}
+
+.page-author{
+    width:170px;
+    display: block;
+    text-align: center;
+    border-right: 1px solid #aaa;
+}
+
+.page-date{
+    width:120px;
+    text-align: center;
+    border-right: 1px solid #aaa;
+    padding-left: 5px;
+    display: block;
+}
+
+.page-buttons{
+    width:45px;
+    display: block;
+}
+
+.fields{
+    display:block;
+    position: relative;
+    padding: 0px;
+    min-height: 37px;
+    border-bottom: 1px solid #aaa;
+    margin:0px;
+}
+
+.fields li{
+    float:left;
+    overflow:hidden;
+    text-align:center;
+    font-size: 12px;
+    padding: 10px 5px 10px 5px;
+}
+
+.fields li a{
+    text-decoration:none;
+    font-weight:bold;
+    font-size:12px;
+    color: #417690;
+}
+
+.field-title{
+    display:block;
+    width: 380px;
+}
+
+.field-order{
+    display: block;
+    width: 76px;
+}
+
+.field-access{
+    width: 81px;
+    display: block;
+}
+
+.field-status{
+    width:101px;
+    display: block;
+}
+
+.field-author{
+    width:171px;
+    display: block;
+}
+
+.field-date{
+    width:121px;
+    display: block;
+}
+
+.pages {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom:10px;
+}
+
+.pages li {
+    float: left;
+    display: block;
+    font-family: Verdana;
+    font-weight: bold;
+    margin-right: 5px;
+    border: 2px solid black;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom:10px;
+}
+
+.pages li a {
+    display:block;
+    text-decoration: none;
+    color:black;
+    padding: 10px 13px 10px 13px;
+}
+
+.page-author a{
+    display:block;
+    text-decoration: none;
+    color: #417690;
+}
+
+.pages li:hover {
+    border-color: #518699;
+}
+.pages .selected {
+    border-color: #518699;
+}
+
+.page-checkbox{
+    display:inline;
+    margin: 0px;
+    margin-left: 5px;
+}
+
+.checkbox-form{
+    margin:0px;
+    padding:0px;
+}
+
+.button{
+    display:block;
+    background: #417690;
+    margin-top:10px;
+    font-size:14px;
+    margin-left: 10px;
+    float:left;
+    border: 1px solid #417690;
+    padding: 6px 15px 4px 15px;
+    border-radius:3px;
+    color:#eee;
+}
+
+.access{
+    float:left;
+    display:block;
+    margin-top: 15px;
+    margin-left: 10px;
+    width: 100px;
+}
+
+.button:hover{
+    cursor:pointer;
+}
+
+.add-button{
+    display:block;
+    background: #417690;
+    margin-top:10px;
+    font-size:14px;
+    margin-left: 559px;  
+    float: left;
+    font-family: Verdana;
+    border: 1px solid #417690;
+    padding: 0px;
+    border-radius:3px;
+    color:#eee;
+}
+
+.add-button a{
+    text-decoration: none;
+    display:block;
+    color:#eee;
+    padding: 4.5px 10px 4.5px 10px;
+}
+
+.error{
+    margin-top:10px;
+    font-family: Verdana;
+    margin-left:15px;
+}
+
+.edit {
+    display: block;
+    width: 17px;
+    margin: auto;
+}
+
+.edit-link {
+    position: relative;
+    display: block;
+    float:left;
+    margin-left:5px;
+    width:17px;
+}
+
+.del {
+    display: block;
+    width: 14px;
+    margin: auto;
+}
+
+.del-link {
+    position: relative;
+    display: block;
+    float:left;
+    padding-top: 1px;
+    margin-left: 7px;
+    width:14px;
+}

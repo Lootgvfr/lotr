@@ -1,0 +1,80 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Profile of user {{ sel_user.username }} {% endblock %}
+
+{% block style %} 
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="text-info">
+        <div class="profile-title">
+            {{ sel_user.username }}
+        </div>
+        <div class="profile-date">
+            Registered on {{ sel_user.date_joined }}
+        </div>
+        <div class="profile-text">
+            <label class="profile-text-label">Name: </label>
+            {{ sel_user.first_name }}
+        </div>
+        <div class="profile-text">
+            <label class="profile-text-label">User group: </label>
+            {{ profile.groupname }}
+        </div>
+        {% if profile.city_show == 'yes' or group == 'Admin' or group == 'Moderator' and profile.groupname == 'User' or user.username == sel_user.username %}
+        <div class="profile-text">
+            <label class="profile-text-label">City: </label>
+            {{ profile.city }}
+        </div>
+        {% endif %}
+        {% if profile.phone_show == 'yes' or group == 'Admin' or group == 'Moderator' and profile.groupname == 'User' or user.username == sel_user.username %}
+        <div class="profile-text">
+            <label class="profile-text-label">Phone number: </label>
+            {{ profile.phone }}
+        </div>
+        {% endif %}
+        {% if profile.email_show == 'yes' or group == 'Admin' or group == 'Moderator' and profile.groupname == 'User' or user.username == sel_user.username %}
+        <div class="profile-text">
+            <label class="profile-text-label">E-mail: </label>
+            {{ sel_user.email }}
+        </div>
+        {% endif %}
+        {% if profile.about_show == 'yes' or group == 'Admin' or group == 'Moderator' and profile.groupname == 'User' or user.username == sel_user.username %}
+        <div class="profile-text">
+            <label class="profile-text-label">About: </label>
+            {{ profile.about }}
+        </div>
+        {% endif %}
+        {% if group == 'Admin' and profile.groupname != 'Admin' %}
+        <form action="{% url 'change_group' sel_user.username %}" method="post">
+            {% csrf_token %}
+            <label class="labl">Group: </label>
+            <select class="group" name="group">
+                <option value="User" {% if profile.groupname == 'User' %}selected{% endif %}>User</option>
+                <option value="Author" {% if profile.groupname == 'Author' %}selected{% endif %}>Author</option>
+                <option value="Moderator" {% if profile.groupname == 'Moderator' %}selected{% endif %}>Moderator</option>
+                <option value="Admin" {% if profile.groupname == 'Admin' %}selected{% endif %}>Admin</option>
+            </select>
+            <input type="submit" class="button" value="Change"/>
+        </form>
+        {% endif %}
+        {% if group == 'Admin' or group == 'Moderator' and profile.groupname == 'User' or user.username == sel_user.username %}
+        <div class="btn">
+            <a href="{% url 'edit_profile' sel_user.username %}">Edit profile</a>
+        </div>
+        {% endif %}
+        {% if sel_user.username != user.username and user.is_authenticated %}
+        <div class="btn">
+            <a href="{% url 'mailbox_send_to' sel_user.username %}">Send a message</a>
+        </div>
+        {% endif %}
+    </div>
+    {% if profile.img %}
+    <div class="pic-container">
+        <img class="page-pic" src="{{ profile.img.url }}">
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

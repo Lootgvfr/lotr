@@ -1,0 +1,49 @@
+﻿{% extends "main/admin_base.html" %}
+{% load staticfiles %}
+
+{% block script %}
+window.onload = function() {
+        var Select = document.getElementById('count');
+        Select.onchange = function() {
+            var ind = Select.selectedIndex + 3;
+            for(var i = 1; i < ind; i++)
+            {
+                var elem = document.getElementById("ans" + i.toString());
+                elem.style.display = 'block';
+            }
+            for(var i = ind; i < 6; i++)
+            {
+                var elem = document.getElementById("ans" + i.toString());
+                elem.style.display = 'none';
+            }
+        }
+    }
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/admin_add_question.css' %}">
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'add_question' %}" method="post">
+    {% csrf_token %}
+    <textarea class="text-input" name="name" placeholder="Caption">{{ question.name }}</textarea>
+    <textarea class="text-input" name="text" placeholder="Full question">{{ question.text }}</textarea>
+    <label class="labl">Amount of answers: </label>
+    <select id="count" class="count" name="answer_count">
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+    <textarea id="ans1" class="text-input" name="ans1" placeholder="Answer 1"></textarea>
+    <textarea id="ans2" class="text-input" name="ans2" placeholder="Answer 2"></textarea>
+    <textarea id="ans3" class="text-input" name="ans3" placeholder="Answer 3"></textarea>
+    <textarea id="ans4" class="text-input" name="ans4" placeholder="Answer 4"></textarea>
+    <textarea id="ans5" class="text-input" name="ans5" placeholder="Answer 5"></textarea>
+    <input type="submit" class="button" value="Add" />
+</form>
+{% if error_message and error_message != '' %}
+<div class="error">{{ error_message }}</div>
+{% endif %}
+{% endblock %}

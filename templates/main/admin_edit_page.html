@@ -1,0 +1,83 @@
+﻿{% extends "main/admin_base.html" %}
+{% load staticfiles %}
+
+{% block script %}
+function add(){
+    var len = document.getElementsByClassName("section").length;
+    var div = document.getElementById("holder");
+    var n = (len+1).toString()
+    holder.innerHTML += "<div class=\"section\" id=\"section" + n +
+    "\" ><div class=\"section-header\">Section " + n + 
+    "<img class=\"del\" id=\"del" + n +
+    "\" onclick=\"del(this.id)\" src=\"/static/main/delete.png\"></div><textarea class=\"section-title\" name=\"section_title_" + n +
+    "\" placeholder=\"Section " + n + " title\"></textarea><textarea class=\"section-text\" name=\"section_text_" + n +
+    "\" placeholder=\"Section " + n + " text\"></textarea></div>";
+}
+
+function del(id){
+    id = id.replace(/\D/g,'');
+    var len = document.getElementsByClassName("section").length;
+    var n = (len+1).toString();
+    rem = document.getElementById("section"+id);
+    rem.parentNode.removeChild(rem);
+    var holder = document.getElementById("holder");
+    var html = holder.innerHTML;
+    for(i = parseInt(id)+1; i < len+1; i++)
+    {
+        html = html.replace("section"+i.toString(),"section"+(i-1).toString());
+        html = html.replace("Section "+i.toString(),"Section "+(i-1).toString());
+        html = html.replace("del"+i.toString(),"del"+(i-1).toString());
+        html = html.replace("section_title_"+i.toString(),"section_title_"+(i-1).toString());
+        html = html.replace("section_text_"+i.toString(),"section_text_"+(i-1).toString());
+        html = html.replace("Section "+i.toString()+" title","Section "+(i-1).toString()+" title");
+        html = html.replace("Section "+i.toString()+" text","Section "+(i-1).toString()+" text");
+    }
+    holder.innerHTML = "";
+    holder.innerHTML = html;
+}
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/admin_edit_page.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if edit == 'yes' %}
+<form action="{% url 'pages_edit' page.order %}" method="post">
+{% else %}
+<form action="{% url 'add_page' %}" method="post">
+{% endif %}
+    {% csrf_token %}
+    {% if error_message and error_message != '' %}
+    <div class="error">{{ error_message }}</div>
+    {% endif %}
+    <div class="caption">Page properties</div>
+    <textarea class="title" name="title" placeholder="Page title">{{ page.title }}</textarea>
+    <textarea class="url" name="url" placeholder="Page URL" {% if edit == 'yes' %} readonly="readonly" {% endif %}>{{ page.url }}</textarea>
+    <textarea class="pic-url" name="pic" placeholder="Pic URL">{{ page.pic }}</textarea>
+    <textarea class="title" name="tags" placeholder="Tags (separated by comma)">{{ page.tags }}</textarea>
+    <textarea class="order" name="order" placeholder="Order of page">{{ page.order }}</textarea>
+    <textarea class="order-old" name="order_old">{{ page.order }}</textarea>
+    <select class="access" name="access">
+        <option value="anon" {% if page.access == 'anon' %} selected {% endif %}>anyone</option>
+        <option value="user" {% if page.access == 'user' %} selected {% endif %}>user-only</option>
+    </select>
+    <select class="status" name="status">
+        <option value="hidden" {% if page.status == 'hidden' %} selected {% endif %}>hidden</option>
+        <option value="published" {% if page.status == 'published' %} selected {% endif %}>published</option>
+    </select>
+    <textarea class="text" name="text" placeholder="Main page text">{{ page.text }}</textarea>
+    <div id="holder">
+        {% for paragraph in page.paragraphs %}
+        <div class="section" id="section{{ paragraph.order }}">
+            <div class="section-header">Section {{ paragraph.order }} <img class="del" id="del{{ paragraph.order }}" onclick="del(this.id)" src="/static/main/delete.png"></div>
+            <textarea class="section-title" name="section_title_{{ paragraph.order }}" placeholder="Section {{ paragraph.order }} title">{{ paragraph.title }}</textarea>
+            <textarea class="section-text" name="section_text_{{ paragraph.order }}" placeholder="Section {{ paragraph.order }} text">{{ paragraph.text }}</textarea>
+        </div>
+        {% endfor %}
+    </div id="holder">
+    <div class="add" onclick="add()">Add section</div>
+    <input type="submit" class="button" value="{% if edit == 'yes' %}Save{% else %}Add{% endif %}" />
+</form>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Main Page {% endblock %}
+
+{% block style %} 
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+<p class="wel">Welcome to the Lord of the Rings movie and book series fan-site!</p>
+<img class="welcome" src="{% static 'main/welcome.jpg' %}">
+{% endblock %}

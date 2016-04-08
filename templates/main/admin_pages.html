@@ -1,0 +1,84 @@
+﻿{% extends "main/admin_base.html" %}
+{% load staticfiles %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/admin_pages.css' %}">
+{% endblock %}
+
+{% block content %}
+<form class="checkbox-form" action="{% url 'pages_del_selected' %}" method="post">
+    {% csrf_token %}
+    <div class='page-container'>
+        <ul class="fields">
+            <li class="field-title">
+                <a href="{% url 'sort_pages' 'title' 'desc' %}">↓</a> Title <a href="{% url 'sort_pages' 'title' 'asc' %}">↑</a>
+            </li>
+            <li class="field-order">
+                <a href="{% url 'sort_pages' 'order' 'desc' %}">↓</a> Order <a href="{% url 'sort_pages' 'order' 'asc' %}">↑</a>
+            </li>
+            <li class="field-access">
+                <a href="{% url 'sort_pages' 'access' 'desc' %}">↓</a> Access <a href="{% url 'sort_pages' 'access' 'asc' %}">↑</a>
+            </li>
+            <li class="field-status">
+                <a href="{% url 'sort_pages' 'status' 'desc' %}">↓</a> Status <a href="{% url 'sort_pages' 'status' 'asc' %}">↑</a>
+            </li>
+            <li class="field-author">
+                <a href="{% url 'sort_pages' 'added_by' 'desc' %}">↓</a> Author <a href="{% url 'sort_pages' 'added_by' 'asc' %}">↑</a>
+            </li>
+            <li class="field-date">
+                <a href="{% url 'sort_pages' 'add_date' 'desc' %}">↓</a> Added on <a href="{% url 'sort_pages' 'add_date' 'asc' %}">↑</a>
+            </li>
+        </ul>
+        {% for page in pages %}
+        <ul class="page">
+            <li class="page-title">
+                {% if group == 'Author' and user.username == page.added_by or group == 'Admin' %}
+                <input type="checkbox" class="page-checkbox" name="checkbox_{{ page.order }}">
+                {% endif %}
+                <a href="{% url 'page' page.url %}">{{ page.title }}</a>               
+            </li>
+            <li class="page-order">
+                {{ page.order }}
+            </li>
+            <li class="page-access">
+                {{ page.access }}
+            </li>
+            <li class="page-status">
+                {% if group == 'Author' and user.username == page.added_by or group == 'Admin' %}
+                <a href="{% url 'change_status' page.order %}">{{ page.status }}</a>
+                {% else %}
+                {{ page.status }}
+                {% endif %}
+            </li>
+            <li class="page-author">
+                <a href="{% url 'profile' page.added_by %}">{{ page.added_by }}</a>
+            </li>
+            <li class="page-date">
+                {{ page.add_date }}    
+            </li>
+            <li class="page-buttons">
+                {% if group == 'Author' and user.username == page.added_by or group == 'Admin' %}
+                <a href="{% url 'pages_edit' page.order %}" class="edit-link">
+                    <img class="edit" src="{% static 'main/edit.png' %}">
+                </a>
+                <a href="{% url 'pages_delete' page.order %}" class="del-link">
+                    <img class="del" src="{% static 'main/delete.png' %}">
+                </a> 
+                {% endif %}
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+    <input type="submit" class="button" name="delete" value="Delete">
+    <input type="submit" class="button" name="submit" value="Publish">
+    <input type="submit" class="button" name="change" value="Change access">
+    <select class="access" name="access">
+        <option value="anon">anyone</option>
+        <option value="user">user-only</option>
+    </select>
+    <div class="add-button"><a href="{% url 'add_page' %}">Add page</a></div>
+</form>
+{% if error_message and error_message != '' %}
+<div class="error">{{ error_message }}</div>
+{% endif %}
+{% endblock %}

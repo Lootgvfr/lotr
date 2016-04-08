@@ -1,0 +1,74 @@
+
+.container{
+    margin-top:-22px;
+}
+.name_input{
+    display:block;
+    width:350px;
+    font-size:16px;
+    font-family: 'Palatino Linotype';
+    margin: 5px 10px 5px 0px;
+    border: 1px solid #222;
+    padding-left:2px;
+    border-radius:2px;
+}
+.email_input{
+    display:block;
+    width:350px;
+    font-size:16px;
+    font-family: 'Palatino Linotype';
+    margin: 5px 10px 5px 0px;
+    border: 1px solid #222;
+    padding-left:2px;
+    border-radius:2px;
+}
+.message_input{
+    display:block;
+    resize: none;
+    width:350px;
+    font-size:16px;
+    font-family: 'Palatino Linotype';
+    height:100px;
+    margin: 5px 10px 5px 0px;
+    border: 1px solid #222;
+    padding-left:2px;
+    border-radius:2px;
+}
+.submit{
+    display:block;
+    background: #333;
+    margin-top:10px;
+    font-size:16px;
+    width:80px;
+    font-family:'Palatino Linotype';
+    border: 1px solid #333;
+    border-radius:3px;
+    color:#eee;
+}
+.left{
+    width:42%;
+    display:block;
+    float:left;
+}
+.right{
+    width:53%;
+    display:block;
+    padding-left: 20px;
+    float:left;
+}
+.message{
+    width: 450px;
+    margin-top: -1px;
+    table-layout: fixed;
+    border: 1px solid #333;
+}
+
+.capt{
+    font-weight: bold;
+    width: 70px;
+    padding: 5px;
+}
+
+.txt{
+    padding: 5px;
+}

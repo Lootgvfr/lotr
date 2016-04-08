@@ -1,0 +1,46 @@
+﻿{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Edit profile of user {{ username }} {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/edit_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<p>Edit profile data of user <b><i>{{ username }}</i></b></p>
+{% if not profile.img %}
+<form id="upl" action="{% url 'edit_profile' username %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" name="upload_pic" class="submit" value="Upload" />
+</form>
+{% else %}
+<a class="del_pic" href="{% url 'del_pic' username %}">Delete picture</a>
+{% endif %}
+<form action="{% url 'edit_profile' username %}" method="post">
+    {% csrf_token %}
+    <input type="text" class="text_input" name="name" value="{{ name }}" placeholder="Display name">
+    <input type="text" class="text_input" name="email" value="{{ email }}" placeholder="E-mail">
+    <input type="text" class="text_input" name="city" value="{{ profile.city }}" placeholder="City">
+    <input type="text" class="text_input" name="phone" value="{{ profile.phone }}" placeholder="Phone number">
+    <textarea class="about_input" name="about" placeholder="About user">{{ profile.about }}</textarea>
+    <label>Show email to other users: </label>
+    <input type="radio" name="email_show" value="yes" {% if profile.email_show == 'yes' %} checked {% endif %}>Yes</input>
+    <input type="radio" name="email_show" value="no" {% if profile.email_show == 'no' %} checked {% endif %}>No</input><br>
+    <label>Show city to other users: </label>
+    <input type="radio" name="city_show" value="yes" {% if profile.city_show == 'yes' %} checked {% endif %}>Yes</input>
+    <input type="radio" name="city_show" value="no" {% if profile.city_show == 'no' %} checked {% endif %}>No</input><br>
+    <label>Show phone number to other users: </label>
+    <input type="radio" name="phone_show" value="yes" {% if profile.phone_show == 'yes' %} checked {% endif %}>Yes</input>
+    <input type="radio" name="phone_show" value="no" {% if profile.phone_show == 'no' %} checked {% endif %}>No</input><br>
+    <label>Show about to other users: </label>
+    <input type="radio" name="about_show" value="yes" {% if profile.about_show == 'yes' %} checked {% endif %}>Yes</input>
+    <input type="radio" name="about_show" value="no" {% if profile.about_show == 'no' %} checked {% endif %}>No</input><br>
+    <input type="submit" name="save" class="submit" value="Save" />
+</form>
+{% if error_message != '' %}
+<p><b>{{ error_message }}</b></p>
+{% endif %}
+{% endblock %}
+
+           

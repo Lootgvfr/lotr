@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss>
+  <channel>
+    <title>Pages</title>
+    <link>{% url 'rss' %}</link>
+    <language>en</language>
+    {% for page in pages %}
+    <item>
+      <title>{{ page.title }}</title>
+      <link>{{ page.link }}</link>
+      <link-xml>{{ page.link }}.xml</link-xml>
+      <date>{{ page.date }}</date>
+      <description>{{ page.description }}</description>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

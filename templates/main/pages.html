@@ -1,0 +1,93 @@
+﻿{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Articles {% endblock %}
+
+{% block script %}
+window.onload = function() {
+        var sel = document.getElementById('question_select');
+        sel.onchange = function() {
+            for(var i = 1; i < sel.length; i++)
+            {
+                var elem = document.getElementById("q" + sel.options[i].value);
+                elem.style.display = 'none';
+            }
+            var elem = document.getElementById("q" + sel.options[sel.selectedIndex].value);
+            elem.style.display = 'block';
+        }
+    }
+{% endblock %}
+
+{% block style %} 
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/pages.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="right">
+    <div class="tags">
+        Filter by tags:<br>
+        {% for tag in tags %}
+        <a href="{% url 'filter_pages' tag.name %}">{{tag.name}}({{ tag.count }})</a>
+        {% endfor %}
+    </div>
+    <div class="questions">
+        <form action="{% url 'pages' %}" method="post">
+            {% csrf_token %}
+            Select poll:<br>
+            <select id="question_select" class="question_select" name="question_select">
+                <option style="display:none;" selected>Poll</option>
+                {% for question in questions %}
+                <option value="{{ question.id }}">{{ question.name }}</option>
+                {% endfor %}
+            </select>
+            {% for question in questions %}
+            <div id="q{{ question.id }}" class="question">
+                <label class="question-text"><b>{{ question.text }}</b></label><br>
+                {% if question.answered == 'no' %}
+                    {% for answer in question.answers %}
+                        <input type="radio" class="ans-radio" name="radio{{ question.id }}" value="{{ answer.num }}">{{ answer.text }}</input><br>
+                    {% endfor %}
+                    <input type="submit" name="answer" class="answer" value="Answer"/>
+                {% else %}
+                    {% for answer in question.answers %}
+                        <div class="ans-text">•{{ answer.text }} - <b>{{ answer.votes_count }} votes</b></div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </form>
+    </div>
+</div>
+<div class="pages">
+    {% for page in pages_list %}
+    <div class="page-container">
+        <div class="continue">
+            <a href="{% url 'page' page.url %}" class="con-link">Continue</a>
+        </div>
+        <div class="comments">
+            ({{ page.comments }} comments)
+        </div>
+        {% if page.pic != '' %}
+        <div class="pic-container">
+            <a href="{% url 'page' page.url %}" class="page-link">
+                <img class="page-pic" src="{% static page.pic %}">
+            </a>
+        </div>
+        {% endif %}
+        <div class="page-text-container">
+            <div class="page-title">
+                <a href="{% url 'page' page.url %}">{{ page.page_title }}</a>
+            </div>
+            <div class="page-date">
+                Added on {{ page.date }} by <a href="{% url 'profile' page.author %}">{{ page.author }}</a>
+                <div class="tags-list">
+                    # {% for tag in page.tags %}<a href="{% url 'filter_pages' tag %}">{{ tag }}</a>, {% endfor %}
+                </div>
+            </div>
+            <div class="page-text">
+                {{ page.text }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

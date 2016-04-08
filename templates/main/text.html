@@ -1,0 +1,100 @@
+﻿{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} {{ selected_page.page_title }} {% endblock %}
+
+{% block script %}
+function hide(str_id){
+    str_id = str_id.replace(/\D/g,'');
+    var btn = document.getElementById('hide' + str_id)
+    var txt = document.getElementById('text' + str_id)
+    if (txt.style.display !== 'none')
+    {
+        txt.style.display = 'none'
+        btn.src = '/static/main/plus.png'
+    }
+    else
+    {
+        txt.style.display = 'block'
+        btn.src = '/static/main/minus.png'
+    }
+}
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/text.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="text-title">{{ selected_page.page_title }}</div>
+<div class="under-title">
+    Added on {{ selected_page.date }} by <a href="{% url 'profile' selected_page.author %}">{{ selected_page.author }}</a>
+    <div class="tags-list">
+        # {% for tag in selected_page.tags %}<a href="{% url 'filter_pages' tag %}">{{ tag }}</a>, {% endfor %}
+    </div>
+</div>
+{% if selected_page.pic %}<img class="text-pic" src="{% static selected_page.pic %}" align="right">{% endif %}
+<div class="page-text">{{ selected_page.text }}</div>
+{% for paragraph in selected_page.paragraphs %}
+    <div class="paragraph">
+        <div class="paragraph-header" id="header{{ paragraph.id }}" onclick="hide(this.id)">
+            <img class="hide" id="hide{{ paragraph.id }}" onclick="hide(this.id)" src="/static/main/minus.png">
+            {{ paragraph.title }}
+        </div>
+        <div class="paragraph-text" id="text{{ paragraph.id }}">
+            {{ paragraph.text }}
+        </div>
+    </div>
+{% endfor %}
+<div class="paragraph">
+    <div class="paragraph-header" id="header100" onclick="hide(this.id)">
+        <img class="hide" id="hide100" onclick="hide(this.id)" src="/static/main/minus.png">
+        Comments
+    </div>
+    <div class="paragraph-text" id="text100">
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="comment">
+                    <div class="comment-right">
+                        <div class="comment-date">
+                            {{ comment.date }}
+                        </div>
+                        {% if group == 'Admin' or group == 'Moderator' %}
+                        <div class="comment-ip">
+                            {{ comment.ip }}
+                        </div>
+                        {% endif %}
+                        {% if group == 'Admin' or group == 'Moderator' or user.username == comment.username %}
+                        <a class="comment-delete" href="{% url 'del_comment' selected_page.url comment.id %}">Delete</a>
+                        {% endif %}
+                    </div>
+                    {% if comment.profile_pic != '' %}
+                        <a href="{% url 'profile' comment.username %}" class="profile-link">
+                            <img class="profile-pic" src="{{ comment.profile_pic }}">
+                        </a>
+                    {% endif %}
+                    <div class="comment-left">
+                        <a class="comment-author" href="{% url 'profile' comment.username %}">{{ comment.username }}</a>
+                        <div class="comment-text">
+                            {{ comment.text }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            No comments here yet.
+        {% endif %}
+        {% if user.is_authenticated %}   
+            <div class="comment-form">
+                Leave your comment below!
+                <form action="{% url 'page' selected_page.url %}" method="post">
+                    {% csrf_token %}
+                    <textarea class="message_input" name="text" placeholder="Your comment"></textarea>
+                    <input type="submit" class="submit" value="Comment"/>
+                </form>
+            </div>
+        {% else %}
+            <label class="log">Login to leave your comment!</label>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

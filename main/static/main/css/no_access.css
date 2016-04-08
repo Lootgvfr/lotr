@@ -1,0 +1,11 @@
+.container{
+    margin-top:0;
+}
+.text-title {
+    font-size:28px;
+    padding-top:20px;
+    font-weight:bold;
+}
+.no{
+    max-width: 400px;
+}

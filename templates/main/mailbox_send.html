@@ -1,0 +1,22 @@
+﻿{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Submission Form {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/mailbox_send.css' %}">
+{% endblock %}
+
+{% block content %}
+<p>Send your message:</p>
+<form action="{% url 'mailbox_send' %}" method="post">
+    {% csrf_token %}
+    <input type="text" class="name_input" name="to" value="{{ to }}" placeholder="Username">
+    <textarea class="message_input" name="text" placeholder="Your message">{{ text }}</textarea>
+    <input type="submit" class="submit" value="Send" />
+</form>
+{% if error_message != '' %}
+<p><b>{{ error_message }}</b></p>
+{% endif %}
+{% endblock %}
+
+           

@@ -1,0 +1,167 @@
+.container{
+    margin-top:-22px;
+}
+
+.text-pic{
+    display:block;
+    max-height:350px;
+}
+
+.under-title{
+    font-size:12px;
+    font-style:italic;
+    color:#777;
+}
+
+.under-title a{
+    color: #777;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.text-title {
+    font-size:28px;
+    padding-top:20px;
+    font-weight:bold;
+}
+
+.page-text{
+    padding-top:10px;
+}
+
+.hide{
+    max-height:12px;
+}
+
+.hide:hover{
+    cursor:pointer;
+}
+
+.paragraph{
+    margin-top:10px;
+}
+
+.paragraph-header{
+    font-size:20px;
+    font-weight:bold;
+    padding-left:5px;
+    padding-bottom:0px;
+    border-bottom: 1px solid #999;
+    display:block;
+}
+
+.paragraph-header:hover{
+    cursor:pointer;
+}
+
+.paragraph-text{
+    display:block;
+    padding-top:5px;
+}
+
+.tags-list{
+    margin-left: 30px;
+    display: inline;
+    font-style: normal;
+}
+
+.tags-list a{
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.tags-list a:hover{
+    text-decoration: underline;
+}
+
+.comment{
+    display:block;
+    width:800px;
+    font-size: 14px;
+    margin:auto;
+    border-bottom: 1px solid #888;
+    padding-bottom: 5px;
+    overflow: auto;
+}
+.profile-link{
+    position: relative;
+}
+
+.profile-pic{
+    display:block;
+    width: 60px;
+    height: 60px;
+    float: left;
+}
+
+.comment-left{
+    width: 68%;
+    padding-left: 5px;
+    display:block;
+    position: relative;
+    float: left;
+}
+
+.comment-right{
+    width: 20%;
+    display:block;
+    position: relative;
+    float: right;
+    overflow: auto;
+}
+
+.comment-date{
+    float: right;
+    clear: right;
+}
+
+.comment-ip{
+    float: right;
+    clear: right;
+}
+
+.comment-delete{
+    float: right;
+    clear: right;
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-author{
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-form{
+    margin-left: 25px;
+    margin-top: 25px;
+}
+
+.message_input{
+    display:block;
+    width:500px;
+    font-size:16px;
+    font-family: 'Palatino Linotype';
+    height:70px;
+    margin: 5px 10px 5px 0px;
+    border: 1px solid #222;
+    padding-left:2px;
+    border-radius:2px;
+}
+
+.submit{
+    display:block;
+    background: #333;
+    margin-top:10px;
+    font-size:16px;
+    width:90px;
+    font-family:'Palatino Linotype';
+    border: 1px solid #333;
+    border-radius:3px;
+    color:#eee;
+}
+
+.log{
+    margin-left: 25px;
+}

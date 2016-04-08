@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Page not found {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/404.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="text-title">Error 404</div>
+<p>Selected page was not found.</p>
+<img class="er" src="{% static 'main/404.jpg' %}">
+{% endblock %}

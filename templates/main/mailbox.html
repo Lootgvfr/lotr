@@ -1,0 +1,64 @@
+﻿{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block title %} Mailbox ({{ type }}) {% endblock %}
+
+{% block script %}
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/mailbox.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="btn-right">
+    <a href="{% url 'mailbox_send' %}">Compose message</a>
+</div>
+<div {% if type == 'received' %} class="btn" {% else %} class="not-btn" {% endif %}>
+    <a href="{% url 'mailbox_received' %}">Received</a>
+</div>
+<div {% if type == 'sent' %} class="btn" {% else %} class="not-btn" {% endif %}>
+    <a href="{% url 'mailbox_sent' %}">Sent</a>
+</div>
+<form {% if type == 'received' %} action="{% url 'mailbox_received' %}" {% else %} action="{% url 'mailbox_sent' %}" {% endif %} method="post">
+    {% csrf_token %}
+    <br>
+    <input type="text" class="username_input" name="Username" value="" placeholder="Username">
+    <input type="submit" class="submit" value="Search" /><br>
+</form>
+<div class="box">
+{% if mails %}
+    {% for message in mails %}
+        <div class="message">
+            <div class="message-right">
+                <div class="message-date">
+                    {{ message.date }}
+                </div>
+                <a class="message-delete" href="{% url 'mailbox_del' message.id %}">Delete</a>
+                {% if type == 'received' %}
+                <a class="message-delete" href="{% url 'mailbox_send_to' message.username %}">Answer</a>
+                {% endif %}
+            </div>
+            {% if message.profile_pic != '' %}
+                <a href="{% url 'profile' message.username %}" class="profile-link">
+                    <img class="profile-pic" src="{{ message.profile_pic }}">
+                </a>
+            {% endif %}
+            <div class="message-left">
+                <i>{% if type == 'received' %}
+                    From:
+                {% else %}
+                    To:
+                {% endif %}
+                </i>
+                <a class="message-author" href="{% url 'profile' message.username %}">{{ message.username }}</a>
+                <div class="comment-text">
+                    {{ message.text }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Nothing here yet.</p>
+{% endif %}
+</div>
+{% endblock %}
